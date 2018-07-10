@@ -32,27 +32,28 @@ public class PaxosStepDefinition {
 	@When("^I search for Paxos Bankchain$")
 	public void i_search_for_Paxos_Bankchain() throws Throwable {
 	    WebElement element=driver.findElement(By.xpath("//*[@id='lst-ib']"));
-		//WebElement element=driver.findElement(By.name("q"));
-	    element.sendKeys("Paxos Bankchain");
+		//locating "search box" element
+	    element.sendKeys("Paxos Bankchain");  //entering "Paxos Bankchain" in search box
 	    element.submit();
 	   
 	}
 
 	@Then("^I get search results for Paxos Bankchain$")
 	public void i_get_search_results_for_Paxos_Bankchain() throws Throwable {
+		//waiting till the search results page is loaded
 		WebElement myDynamicElement = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("resultStats")));
-		verifyURLhasPaxos();
-	    verifyResultsHasPaxos();
-	    driver.close();
+		verifyURLhasPaxos();  //checks if URL has the searched keywords 
+	    verifyResultsHasPaxos(); //checks if search result page has the keywords
+	    driver.close(); //closes the browser window
 	}
 
 	private void verifyResultsHasPaxos() {
 
-		List<WebElement> resultEntries = driver.findElements(By.cssSelector("div.s"));
-        for(WebElement element : resultEntries){
+		List<WebElement> resultEntries = driver.findElements(By.cssSelector("div.s"));  //checks in the text overview of results
+        for(WebElement element : resultEntries){  
         	
             String href = element.getText();
-            assertTrue(href.contains("Paxos") || href.contains("bankchain"));
+            assertTrue(href.contains("Paxos") || href.contains("bankchain")); //text should contain the keywords
            
         }
 	}
